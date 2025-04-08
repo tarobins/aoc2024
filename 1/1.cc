@@ -4,6 +4,7 @@
 #include <fstream>
 #include <fstream>
 #include <vector>
+#include <numeric>
 
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
@@ -63,20 +64,12 @@ int main(int argc, char *argv[])
     }
 
     // print the contents of the vectors
-    int sum = 0;
-
-    for (auto val : column1)
-    {
-        int count = 0;
-        for (auto val2 : column2)
-        {
-            if (val == val2)
-            {
-                count++;
-            }
-        }
-        sum += val * count;
-    }
+    int sum = std::transform_reduce(
+        column1.begin(), column1.end(), 0, std::plus<>(),
+        [&column2](int val) {
+            int count = std::count(column2.begin(), column2.end(), val);
+            return val * count;
+        });
 
     std::cout << "Sum of counts: " << sum << std::endl;
 
