@@ -1,9 +1,9 @@
 cc_binary(
-    name = "1",
-    srcs = ["1.cc"],
+    name = "2",
+    srcs = ["2.cc"],
     deps = [
         "//flags:flags",  # Reference the flags target
     ],
     data = ["test_data.txt", "data.txt"],
-    copts = ["-DTARGET_DIR=\\\"1\\\""],
+    copts = ["-DTARGET_DIR=\\\"2\\\""],
 )
