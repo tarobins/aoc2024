@@ -6,3 +6,4 @@
 ###############################################################################
 bazel_dep(name = "abseil-cpp", version = "20240116.0")
 bazel_dep(name = "rules_cc", version = "0.0.6")
+bazel_dep(name = "googletest", version = "1.15.2")
