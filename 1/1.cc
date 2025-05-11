@@ -5,25 +5,36 @@
 #include <fstream>
 #include <vector>
 #include <numeric>
+#include <algorithm>
 
-#include "absl/flags/flag.h"
-#include "absl/flags/parse.h"
+// #include "absl/flags/flag.h"
+// #include "absl/flags/parse.h"
 #include "flags/flags.h"
+#include "table_read/table_read.h"
 
-int process(std::ifstream& filestream)
+int process(Table table)
 {
     
-    // Read the file into two vectors
+
+
+    // Read the table into two vectors
     std::vector<int> column1;
     std::vector<int> column2;
 
-    int val1, val2;
-    while (filestream >> val1 >> val2)
+    // int val1, val2;
+    // while (filestream >> val1 >> val2)
+    // {
+    //     column1.push_back(val1);
+    //     column2.push_back(val2);
+    // }
+    // filestream.close();
+
+    for (Row row : table)
     {
-        column1.push_back(val1);
-        column2.push_back(val2);
+        column1.push_back(row[0]);
+        column2.push_back(row[1]);
     }
-    filestream.close();
+
 
     // print the contents of the vectors
     int sum = std::transform_reduce(

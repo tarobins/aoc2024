@@ -1,5 +1,6 @@
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
+#include "table_read/table_read.h"
 
 #include <iostream>
 #include <string>
@@ -10,7 +11,7 @@
 
 ABSL_FLAG(std::string, filename, "test_data.txt", "Filename to process");
 
-int process(std::ifstream& filestream);
+int process(Table table);
 
 int main(int argc, char *argv[])
 {
@@ -49,5 +50,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    return process(file_stream);
+    std::cerr << "File opened successfully." << std::endl;
+    Table table(file_stream);
+
+    std::cerr << "Table read successfully." << std::endl;
+
+    return process(table);
 }
