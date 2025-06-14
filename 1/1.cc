@@ -25,6 +25,20 @@ int process(Table table)
     }
 
     // print the contents of the vectors
+    std::cout << "Column 1: ";
+    for (const auto &val : column1)
+    {
+        std::cout << val << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Column 2: ";
+    for (const auto &val : column2)
+    {
+        std::cout << val << " ";
+    }
+    std::cout << std::endl;
+
+    // print the contents of the vectors
     int sum = std::transform_reduce(
         column1.begin(), column1.end(), 0, std::plus<>(),
         [&column2](int val)

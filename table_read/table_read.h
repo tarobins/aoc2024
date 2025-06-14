@@ -10,7 +10,10 @@
 class Row;
 
 using ColItr = std::vector<int>::iterator;
+using ConstColItr = std::vector<int>::const_iterator;
+
 using RowItr = std::vector<Row>::iterator;
+using ConstRowItr = std::vector<Row>::const_iterator;
 
 class Row
 {
@@ -37,15 +40,11 @@ public:
     return data.size();
   }
 
-  const ColItr begin()
-  {
-    return data.begin();
-  }
+  ColItr begin() { return data.begin(); }
+  ColItr end() { return data.end(); }
+  ConstColItr begin() const { return data.begin(); }
+  ConstColItr end() const { return data.end(); }
 
-  const ColItr end()
-  {
-    return data.end();
-  }
 
 private:
   std::vector<int> data;
@@ -80,6 +79,16 @@ public:
   }
 
   const RowItr end() 
+  {
+    return data.end();
+  }
+
+  ConstRowItr begin() const
+  {
+    return data.begin();
+  }
+
+  ConstRowItr end() const
   {
     return data.end();
   }
