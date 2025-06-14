@@ -14,27 +14,15 @@
 
 int process(Table table)
 {
-    
-
-
     // Read the table into two vectors
     std::vector<int> column1;
     std::vector<int> column2;
-
-    // int val1, val2;
-    // while (filestream >> val1 >> val2)
-    // {
-    //     column1.push_back(val1);
-    //     column2.push_back(val2);
-    // }
-    // filestream.close();
 
     for (Row row : table)
     {
         column1.push_back(row[0]);
         column2.push_back(row[1]);
     }
-
 
     // print the contents of the vectors
     int sum = std::transform_reduce(
