@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 
 #include "flags/flags.h"
 #include "table_read/table_read.h"
@@ -10,11 +11,8 @@ enum class Direction {
     UNKNOWN
 };
 
-int process(Table table) {
-    int numberOfSafeRows = 0;
-    // Output the table contents
-    for (const Row &row : table) {
-        Direction direction = Direction::UNKNOWN;
+bool checkRow(std::vector<int> row) {
+    Direction direction = Direction::UNKNOWN;
         ConstColItr colItr = row.begin();
         int lastValue = *colItr;
         colItr++;
@@ -40,9 +38,20 @@ int process(Table table) {
             lastValue = *colItr;
             if (++colItr == row.end()) {
                 // If we reach the end of the row, it is a safe row
-                numberOfSafeRows++;
+                return true;
                 break;
             }
+        }
+        return false; 
+}
+
+int process(Table table) {
+    int numberOfSafeRows = 0;
+    // Output the table contents
+    for (const Row &row : table) {
+        std::vector<int> rowData = std::vector<int>(row.begin(), row.end());
+        if (checkRow(rowData)) {
+            numberOfSafeRows++;
         }
     }
 
