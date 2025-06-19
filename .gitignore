@@ -20,3 +20,5 @@
 /production
 /.sass-cache
 /MODULE.bazel.lock
+.aider*
+/env
