@@ -1,6 +1,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <thread>
+#include <mutex>
+#include <atomic>
+#include <future>
 
 #include "flags/flags.h"
 #include "table_read/table_read.h"
@@ -104,19 +108,72 @@ bool checkRow(Iterator begin, Iterator end) {
     return false; 
 }
 
-int process(Table table) {
-    int numberOfSafeRows = 0;
-    // Output the table contents
-    for (const Row &row : table) {
-        for (int i = 0; i < row.size(); i++) { 
-            auto [begin, end] = makeSkipRange(row.begin(), row.end(), i);
-            if (checkRow(begin, end)) {
-                numberOfSafeRows++;
-                break;  
-            }
+// Function to check if a single row is safe (with skip logic)
+bool isRowSafe(const Row& row) {
+    for (int i = 0; i < row.size(); i++) { 
+        auto [begin, end] = makeSkipRange(row.begin(), row.end(), i);
+        if (checkRow(begin, end)) {
+            return true;
         }
     }
+    return false;
+}
 
-    std::cout << "Number of safe rows: " << numberOfSafeRows << std::endl;
+// Function to process a chunk of rows
+int processRowChunk(Table rows, size_t start, size_t end) {
+    int safeCount = 0;
+    for (size_t i = start; i < end && i < rows.size(); ++i) {
+        if (isRowSafe(rows[i])) {
+            safeCount++;
+        }
+    }
+    return safeCount;
+}
+
+int process(Table table) {
+    const unsigned int numThreads = std::thread::hardware_concurrency();
+    const size_t numRows = table.size();
+    
+    // If we have fewer rows than threads, just use single thread
+    if (numRows < numThreads || numThreads == 0) {
+        int numberOfSafeRows = 0;
+        for (const Row &row : table) {
+            if (isRowSafe(row)) {
+                numberOfSafeRows++;
+            }
+        }
+        std::cout << "Number of safe rows: " << numberOfSafeRows << std::endl;
+        return 0;
+    }
+    
+    // Calculate chunk size for each thread
+    const size_t chunkSize = numRows / numThreads;
+    const size_t remainder = numRows % numThreads;
+    
+    // Create futures to store results from each thread
+    std::vector<std::future<int>> futures;
+    futures.reserve(numThreads);
+    
+    // Launch threads
+    size_t currentStart = 0;
+    for (unsigned int i = 0; i < numThreads; ++i) {
+        size_t currentChunkSize = chunkSize + (i < remainder ? 1 : 0);
+        size_t currentEnd = currentStart + currentChunkSize;
+        
+        // Launch async task
+        futures.push_back(std::async(std::launch::async, processRowChunk, 
+                                   table, currentStart, currentEnd));
+        
+        currentStart = currentEnd;
+    }
+    
+    // Collect results from all threads
+    int totalSafeRows = 0;
+    for (auto& future : futures) {
+        totalSafeRows += future.get();
+    }
+
+    std::cout << "Number of safe rows: " << totalSafeRows << std::endl;
+    std::cout << "Processed using " << numThreads << " threads" << std::endl;
     return 0;
 }

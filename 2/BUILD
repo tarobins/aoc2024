@@ -8,4 +8,5 @@ cc_binary(
     ],
     data = ["test_data.txt", "data.txt"],
     copts = ["-DTARGET_DIR=\\\"2\\\""],
+    linkopts = ["-pthread"],
 )
