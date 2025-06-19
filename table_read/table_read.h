@@ -9,10 +9,8 @@
 
 class Row;
 
-using ColItr = std::vector<int>::iterator;
 using ConstColItr = std::vector<int>::const_iterator;
 
-using RowItr = std::vector<Row>::iterator;
 using ConstRowItr = std::vector<Row>::const_iterator;
 
 class Row
@@ -40,8 +38,6 @@ public:
     return data.size();
   }
 
-  ColItr begin() { return data.begin(); }
-  ColItr end() { return data.end(); }
   ConstColItr begin() const { return data.begin(); }
   ConstColItr end() const { return data.end(); }
 
@@ -63,7 +59,7 @@ public:
     }
   }
 
-  Row& operator[](int r) 
+  const Row& operator[](int r) const
   {
     return data[r]; 
   }
@@ -71,16 +67,6 @@ public:
   int size() const
   {
     return data.size();
-  }
-
-  const RowItr begin()
-  {
-    return data.begin();
-  }
-
-  const RowItr end() 
-  {
-    return data.end();
   }
 
   ConstRowItr begin() const

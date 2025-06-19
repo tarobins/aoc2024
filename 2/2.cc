@@ -120,7 +120,7 @@ bool isRowSafe(const Row& row) {
 }
 
 // Function to process a chunk of rows
-int processRowChunk(Table rows, size_t start, size_t end) {
+int processRowChunk(const Table rows, size_t start, size_t end) {
     int safeCount = 0;
     for (size_t i = start; i < end && i < rows.size(); ++i) {
         if (isRowSafe(rows[i])) {
