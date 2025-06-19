@@ -11,9 +11,9 @@ enum class Direction {
     UNKNOWN
 };
 
-bool checkRow(std::vector<int> row) {
+bool checkRow(ConstColItr begin, ConstColItr end) {
     Direction direction = Direction::UNKNOWN;
-        ConstColItr colItr = row.begin();
+        ConstColItr colItr = begin;
         int lastValue = *colItr;
         colItr++;
         while (true) {
@@ -36,7 +36,7 @@ bool checkRow(std::vector<int> row) {
                 }
             }
             lastValue = *colItr;
-            if (++colItr == row.end()) {
+            if (++colItr == end) {
                 // If we reach the end of the row, it is a safe row
                 return true;
                 break;
@@ -49,8 +49,7 @@ int process(Table table) {
     int numberOfSafeRows = 0;
     // Output the table contents
     for (const Row &row : table) {
-        std::vector<int> rowData = std::vector<int>(row.begin(), row.end());
-        if (checkRow(rowData)) {
+        if (checkRow(row.begin(), row.end())) {
             numberOfSafeRows++;
         }
     }
