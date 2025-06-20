@@ -9,7 +9,7 @@
 
 // #include "absl/flags/flag.h"
 // #include "absl/flags/parse.h"
-#include "flags/flags.h"
+#include "flags/flags_table.h"
 #include "table_read/table_read.h"
 
 int process(Table table)
