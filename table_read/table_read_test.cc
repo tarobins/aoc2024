@@ -61,7 +61,7 @@ TEST(Test, TestRowIterator) {
 
     Table table(mock_file);
 
-    RowItr it = table.begin();
+    ConstRowItr it = table.begin();
 
     EXPECT_EQ((*it)[0], 1);
     EXPECT_EQ((*it)[1], 2);
@@ -80,7 +80,7 @@ TEST(Test, TestSingleRowIterator) {
 
     Table table(mock_file);
 
-    ColItr it = table[1].begin();
+    ConstColItr it = table[1].begin();
     EXPECT_EQ(*it, 3);
     ++it;
     EXPECT_EQ(*it, 4);
