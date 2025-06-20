@@ -20,3 +20,12 @@ cc_library(
     ],
     visibility = ["//visibility:public"],  # Allow other targets to use this library
 )
+
+cc_library(
+    name = "flags_string",
+    hdrs = ["flags_string.h"],
+    deps = [
+        ":file_setup",
+    ],
+    visibility = ["//visibility:public"],  # Allow other targets to use this library
+)
