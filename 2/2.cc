@@ -109,7 +109,7 @@ bool checkRow(Iterator begin, Iterator end) {
 }
 
 // Function to check if a single row is safe (with skip logic)
-bool isRowSafe(const Row& row) {
+bool isRowSafe(const Row<int>& row) {
     for (int i = 0; i < row.size(); i++) { 
         auto [begin, end] = makeSkipRange(row.begin(), row.end(), i);
         if (checkRow(begin, end)) {
@@ -120,7 +120,7 @@ bool isRowSafe(const Row& row) {
 }
 
 // Function to process a chunk of rows
-int processRowChunk(const Table rows, size_t start, size_t end) {
+int processRowChunk(const Table<int> rows, size_t start, size_t end) {
     int safeCount = 0;
     for (size_t i = start; i < end && i < rows.size(); ++i) {
         if (isRowSafe(rows[i])) {
@@ -130,14 +130,14 @@ int processRowChunk(const Table rows, size_t start, size_t end) {
     return safeCount;
 }
 
-int process(Table table) {
+int process(Table<int> table) {
     const unsigned int numThreads = std::thread::hardware_concurrency();
     const size_t numRows = table.size();
     
     // If we have fewer rows than threads, just use single thread
     if (numRows < numThreads || numThreads == 0) {
         int numberOfSafeRows = 0;
-        for (const Row &row : table) {
+        for (const Row<int> &row : table) {
             if (isRowSafe(row)) {
                 numberOfSafeRows++;
             }

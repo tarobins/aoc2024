@@ -12,13 +12,13 @@
 #include "flags/flags_table.h"
 #include "table_read/table_read.h"
 
-int process(Table table)
+int process(Table<int> table)
 {
     // Read the table into two vectors
     std::vector<int> column1;
     std::vector<int> column2;
 
-    for (Row row : table)
+    for (Row<int> row : table)
     {
         column1.push_back(row[0]);
         column2.push_back(row[1]);

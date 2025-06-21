@@ -7,12 +7,16 @@
 #include <vector>
 #include <iostream>
 
+template <typename T>
 class Row;
 
-using ConstColItr = std::vector<int>::const_iterator;
+template <typename T>
+using ConstColItr = typename std::vector<T>::const_iterator;
 
-using ConstRowItr = std::vector<Row>::const_iterator;
+template <typename T>
+using ConstRowItr = typename std::vector<Row<T>>::const_iterator;
 
+template <typename T>
 class Row
 {
 public:
@@ -28,7 +32,7 @@ public:
     }
   }
 
-  const int operator[](int c) const
+  const T operator[](int c) const
   {
     return data[c]; 
   }
@@ -38,14 +42,15 @@ public:
     return data.size();
   }
 
-  ConstColItr begin() const { return data.begin(); }
-  ConstColItr end() const { return data.end(); }
+  ConstColItr<T> begin() const { return data.begin(); }
+  ConstColItr<T> end() const { return data.end(); }
 
 
 private:
-  std::vector<int> data;
+  std::vector<T> data;
 };
 
+template <typename T>
 class Table
 {
 public:
@@ -59,28 +64,28 @@ public:
     }
   }
 
-  const Row& operator[](int r) const
+  const Row<T>& operator[](int r) const
   {
     return data[r]; 
   }
 
-  int size() const
+  size_t size() const
   {
     return data.size();
   }
 
-  ConstRowItr begin() const
+  ConstRowItr<T> begin() const
   {
     return data.begin();
   }
 
-  ConstRowItr end() const
+  ConstRowItr<T> end() const
   {
     return data.end();
   }
 
 private:
-  std::vector<Row> data;
+  std::vector<Row<T>> data;
 };
 
 
