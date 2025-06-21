@@ -2,9 +2,9 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("@rules_cc//cc:cc_test.bzl", "cc_test")
 
 cc_library(
-    name = "table_read",
-    srcs = ["table_read.cc"],
-    hdrs = ["table_read.h"],
+    name = "table",
+    srcs = ["table.cc"],
+    hdrs = ["table.h"],
     deps = [
         # "//flags:flags",  # Reference the flags target
         # "@abseil-cpp//absl/strings:str_format",
@@ -15,10 +15,10 @@ cc_library(
 
 
 cc_test(
-    name = "table_read_test",
-    srcs = ["table_read_test.cc"],
+    name = "table_test",
+    srcs = ["table_test.cc"],
     deps = [
-        ":table_read",  # Reference the table_read library
+        ":table",  # Reference the table library
         # "//flags:flags",  # Reference the flags target
         "@googletest//:gtest",  # GoogleTest dependency
         "@googletest//:gtest_main",  # GoogleTest main function

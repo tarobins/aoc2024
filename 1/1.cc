@@ -10,7 +10,7 @@
 // #include "absl/flags/flag.h"
 // #include "absl/flags/parse.h"
 #include "flags/flags_table.h"
-#include "table_read/table_read.h"
+#include "table/table.h"
 
 int process(Table<int> table)
 {

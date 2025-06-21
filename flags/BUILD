@@ -16,7 +16,7 @@ cc_library(
     hdrs = ["flags_table.h"],
     deps = [
         ":file_setup",
-        "//table_read:table_read",  # Reference the table_read library
+        "//table:table",  # Reference the table library
     ],
     visibility = ["//visibility:public"],  # Allow other targets to use this library
 )

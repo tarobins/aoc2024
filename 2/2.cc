@@ -7,7 +7,7 @@
 #include <future>
 
 #include "flags/flags_table.h"
-#include "table_read/table_read.h"
+#include "table/table.h"
 
 enum class Direction {
     UP,

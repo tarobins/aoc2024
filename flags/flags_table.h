@@ -1,5 +1,5 @@
 #include "flags/file_setup.h"
-#include "table_read/table_read.h"
+#include "table/table.h"
 
 #include <iostream>
 #include <vector>
