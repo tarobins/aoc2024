@@ -10,7 +10,8 @@ int process(Table<int> table);
 int main(int argc, char *argv[])
 {
     std::ifstream file_stream = setup_and_open_file(argc, argv, TARGET_DIR);
-    Table<int> table(file_stream);
+    auto parsed_data = parseTable<int>(file_stream);
+    Table<int> table(parsed_data);
 
     std::cerr << "Table read successfully." << std::endl;
 
