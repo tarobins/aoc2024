@@ -3,7 +3,6 @@ load("@rules_cc//cc:cc_test.bzl", "cc_test")
 
 cc_library(
     name = "table",
-    srcs = ["table.cc"],
     hdrs = ["table.h"],
     deps = [
         # "//flags:flags",  # Reference the flags target
