@@ -11,9 +11,30 @@ cc_library(
     visibility = ["//visibility:public"],
 )
 
+# DEPRECATED: Use flags_int or flags_char instead
+# cc_library(
+#     name = "flags",
+#     hdrs = ["flags_table.h"],
+#     deps = [
+#         ":file_setup",
+#         "//table:table",  # Reference the table library
+#     ],
+#     visibility = ["//visibility:public"],  # Allow other targets to use this library
+# )
+
 cc_library(
-    name = "flags",
-    hdrs = ["flags_table.h"],
+    name = "flags_int",
+    hdrs = ["flags_table_int.h"],
+    deps = [
+        ":file_setup",
+        "//table:table",  # Reference the table library
+    ],
+    visibility = ["//visibility:public"],  # Allow other targets to use this library
+)
+
+cc_library(
+    name = "flags_char",
+    hdrs = ["flags_table_char.h"],
     deps = [
         ":file_setup",
         "//table:table",  # Reference the table library

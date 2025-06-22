@@ -33,6 +33,12 @@ inline std::string parseValue<std::string>(const std::string& str) {
     return str;
 }
 
+// Specialization for char
+template <>
+inline char parseValue<char>(const std::string& str) {
+    return str.empty() ? '\0' : str[0];
+}
+
 template <typename T>
 std::vector<T> parseRow(const std::string& rowData, char delimiter = ' ') {
     std::vector<T> result;
@@ -45,6 +51,18 @@ std::vector<T> parseRow(const std::string& rowData, char delimiter = ' ') {
         }
     }
     
+    return result;
+}
+
+// Specialization for char to parse each character individually (no delimiter)
+template <>
+inline std::vector<char> parseRow<char>(const std::string& rowData, char delimiter) {
+    std::vector<char> result;
+    for (char c : rowData) {
+        if (c != '\r' && c != '\n') {  // Skip line ending characters
+            result.push_back(c);
+        }
+    }
     return result;
 }
 

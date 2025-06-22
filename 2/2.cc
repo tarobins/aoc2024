@@ -6,7 +6,7 @@
 #include <atomic>
 #include <future>
 
-#include "flags/flags_table.h"
+#include "flags/flags_table_int.h"
 #include "table/table.h"
 
 enum class Direction {

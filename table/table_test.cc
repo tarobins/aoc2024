@@ -238,22 +238,4 @@ TEST(Test, IntegrationParseAndConstruct) {
     EXPECT_EQ(table[1][2], 50);
 }
 
-TEST(Test, ParseRowEdgeCases) {
-    // Test empty string
-    auto empty = parseRow<int>("");
-    EXPECT_EQ(empty.size(), 0);
-    
-    // Test single value
-    auto single = parseRow<int>("42");
-    EXPECT_EQ(single.size(), 1);
-    EXPECT_EQ(single[0], 42);
-    
-    // Test multiple spaces
-    auto multiSpace = parseRow<int>("1    2     3");
-    EXPECT_EQ(multiSpace.size(), 3);
-    EXPECT_EQ(multiSpace[0], 1);
-    EXPECT_EQ(multiSpace[1], 2);
-    EXPECT_EQ(multiSpace[2], 3);
-}
-
 

@@ -1,19 +1,14 @@
-#include "flags/file_setup.h"
-#include "table/table.h"
+// This file has been replaced by type-specific headers:
+// - flags_table_int.h for integer-based tables (targets 1, 2, 3)
+// - flags_table_char.h for character-based tables (target 4)
+//
+// If you need to use this file, include one of the specific headers instead:
+// #include "flags/flags_table_int.h"  // for Table<int>
+// #include "flags/flags_table_char.h" // for Table<char>
 
-#include <iostream>
-#include <vector>
-#include <numeric>
+#ifndef FLAGS_TABLE_H_DEPRECATED
+#define FLAGS_TABLE_H_DEPRECATED
 
-int process(Table<int> table);
+#warning "flags_table.h is deprecated. Use flags_table_int.h or flags_table_char.h instead."
 
-int main(int argc, char *argv[])
-{
-    std::ifstream file_stream = setup_and_open_file(argc, argv, TARGET_DIR);
-    auto parsed_data = parseTable<int>(file_stream);
-    Table<int> table(parsed_data);
-
-    std::cerr << "Table read successfully." << std::endl;
-
-    return process(table);
-}
+#endif // FLAGS_TABLE_H_DEPRECATED
