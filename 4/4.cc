@@ -33,58 +33,41 @@ int process(Table<char> table)
     std::cout << "Table printing complete." << std::endl;
 
 
-    // Count the number of instances of XMAS, in any direction, in the table
+    // Count the number of X-shaped MAS patterns (two MAS sequences crossing at A)
     int xmas_count = 0;
-    const std::string target = "XMAS";
     
-    // Define all 8 directions: horizontal, vertical, and diagonal
-    std::vector<std::pair<int, int>> directions = {
-        {0, 1},   // right
-        {0, -1},  // left
-        {1, 0},   // down
-        {-1, 0},  // up
-        {1, 1},   // down-right diagonal
-        {1, -1},  // down-left diagonal
-        {-1, 1},  // up-right diagonal
-        {-1, -1}  // up-left diagonal
-    };
-    
-    // Check each position in the table as a potential starting point
-    for (int row = 0; row < static_cast<int>(table.size()); ++row) {
-        for (int col = 0; col < static_cast<int>(table[row].size()); ++col) {
-            // Try each direction from this position
-            for (const auto& dir : directions) {
-                int dr = dir.first;
-                int dc = dir.second;
-                bool found = true;
-                
-                // Check if we can fit the entire word in this direction
-                for (int i = 0; i < static_cast<int>(target.length()); ++i) {
-                    int new_row = row + i * dr;
-                    int new_col = col + i * dc;
-                    
-                    // Check bounds
-                    if (new_row < 0 || new_row >= static_cast<int>(table.size()) ||
-                        new_col < 0 || new_col >= static_cast<int>(table[new_row].size())) {
-                        found = false;
-                        break;
-                    }
-                    
-                    // Check if character matches
-                    if (table[new_row][new_col] != target[i]) {
-                        found = false;
-                        break;
-                    }
-                }
-                
-                if (found) {
-                    xmas_count++;
-                }
+    // Check each position as a potential center 'A' of an X-shaped MAS pattern
+    // We need at least 1 cell margin on all sides for the full X pattern
+    for (int row = 1; row < static_cast<int>(table.size()) - 1; ++row) {
+        for (int col = 1; col < static_cast<int>(table[row].size()) - 1; ++col) {
+            // The center must be 'A'
+            if (table[row][col] != 'A') {
+                continue;
+            }
+            
+            // Check both diagonals for MAS or SAM patterns
+            // Diagonal 1: top-left to bottom-right
+            char tl = table[row - 1][col - 1];  // top-left
+            char br = table[row + 1][col + 1];  // bottom-right
+            
+            // Diagonal 2: top-right to bottom-left  
+            char tr = table[row - 1][col + 1];  // top-right
+            char bl = table[row + 1][col - 1];  // bottom-left
+            
+            // Check if diagonal 1 forms MAS or SAM
+            bool diag1_valid = (tl == 'M' && br == 'S') || (tl == 'S' && br == 'M');
+            
+            // Check if diagonal 2 forms MAS or SAM
+            bool diag2_valid = (tr == 'M' && bl == 'S') || (tr == 'S' && bl == 'M');
+            
+            // If both diagonals form valid MAS/SAM patterns, we found an X-MAS
+            if (diag1_valid && diag2_valid) {
+                xmas_count++;
             }
         }
     }
     
-    std::cout << "Number of XMAS instances found: " << xmas_count << std::endl;
+    std::cout << "Number of X-shaped MAS patterns found: " << xmas_count << std::endl;
 
     return 0;
 }
