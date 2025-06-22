@@ -1,5 +1,6 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("@rules_cc//cc:cc_test.bzl", "cc_test")
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 
 cc_library(
     name = "table",
@@ -21,5 +22,13 @@ cc_test(
         # "//flags:flags",  # Reference the flags target
         "@googletest//:gtest",  # GoogleTest dependency
         "@googletest//:gtest_main",  # GoogleTest main function
+    ],
+)
+
+cc_binary(
+    name = "parsing_demo",
+    srcs = ["parsing_demo.cc"],
+    deps = [
+        ":table",
     ],
 )
