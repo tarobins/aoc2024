@@ -1,4 +1,5 @@
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_rust//rust:defs.bzl", "rust_binary")
 
 cc_binary(
     name = "1",
@@ -9,4 +10,13 @@ cc_binary(
     ],
     data = ["test_data.txt", "data.txt"],
     copts = ["-DTARGET_DIR=\\\"1\\\""],
+)
+
+rust_binary(
+    name = "1_rust",
+    srcs = ["1.rs"],
+    edition = "2021",
+    deps = [
+        "@crates//:clap",
+    ],
 )
