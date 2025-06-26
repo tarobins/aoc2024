@@ -22,3 +22,4 @@
 /MODULE.bazel.lock
 .aider*
 /env
+/target
