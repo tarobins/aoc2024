@@ -1,6 +1,7 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("@rules_cc//cc:cc_test.bzl", "cc_test")
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 
 cc_library(
     name = "table",
@@ -31,4 +32,19 @@ cc_binary(
     deps = [
         ":table",
     ],
+)
+
+# Rust library
+rust_library(
+    name = "table_rust",
+    srcs = ["table.rs"],
+    edition = "2021",
+    visibility = ["//visibility:public"],
+)
+
+# Rust test
+rust_test(
+    name = "table_rust_test",
+    crate = ":table_rust",
+    edition = "2021",
 )

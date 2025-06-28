@@ -17,6 +17,7 @@ crate.from_cargo(
     manifests = [
         "//:Cargo.toml",
         "//1:Cargo.toml",
+        "//table:Cargo.toml",
     ],
 )
 use_repo(crate, "crates")
