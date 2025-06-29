@@ -15,6 +15,7 @@ cc_binary(
 rust_binary(
     name = "1_rust",
     srcs = ["1.rs"],
+    data = ["test_data.txt", "data.txt"],
     edition = "2021",
     deps = [
         "@crates//:clap",
