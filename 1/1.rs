@@ -11,14 +11,14 @@ fn process(table: &Table<i32>) {
              table.row_count(), 
              table.column_count());
 
-    let mut column1 = vec![];
-    let mut column2 = vec![];
+    let mut column1: Vec<i32> = vec![];
+    let mut column2: Vec<i32> = vec![];
     for row in table {
         if let Some(value) = row.get(0) {
-            column1.push(value);
+            column1.push(*value);
         }
         if let Some(value) = row.get(1) {
-            column2.push(value);
+            column2.push(*value);
         }
     }
 
