@@ -1,8 +1,11 @@
+use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 fn main() {
-    let file = File::open("5/test_data.txt").expect("Unable to open the file");
+    let args: Vec<String> = env::args().collect();
+    let filename = &args[1];
+    let file = File::open(filename).expect("Unable to open the file");
     let reader = BufReader::new(file);
 
     let mut tuples: Vec<(i32, i32)> = Vec::new();
