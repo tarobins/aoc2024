@@ -22,17 +22,16 @@ fn process(table: &Table<i32>) {
         }
     }
 
-    // Sort both columns
-    column1.sort();
-    column2.sort();
+    let sum: i32 = column1.iter()
+        .map(|val| {
+            let sim = column2.iter()
+                .map(|v| if *v == *val { 1 } else { 0 })
+                .sum::<i32>();
+            *val * sim
+        })
+        .sum();
     
-    let mut sum = 0;
-
-    for (val1, val2) in column1.iter().zip(column2.iter()) {
-        sum += (*val1 - *val2).abs();
-    }
-    
-    println!("Total sum of absolute differences: {}", sum);   
+    println!("Similarity: {}", sum);   
 }
 
 fn main() {
