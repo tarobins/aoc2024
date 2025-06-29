@@ -19,5 +19,6 @@ rust_binary(
     edition = "2021",
     deps = [
         "@crates//:clap",
+        "//table:table_rust",
     ],
 )

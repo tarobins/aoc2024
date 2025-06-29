@@ -1,6 +1,40 @@
 use clap::{Arg, Command};
 use std::fs;
 
+// Import the table library
+use table_rust::{Table, from_string_with};
+
+fn process(table: &Table<i32>) {
+    // Example processing function that could be used later
+    // This is just a placeholder for any future logic
+    println!("Processing table with {} rows and {} columns", 
+             table.row_count(), 
+             table.column_count());
+
+    let mut column1 = vec![];
+    let mut column2 = vec![];
+    for row in table {
+        if let Some(value) = row.get(0) {
+            column1.push(value);
+        }
+        if let Some(value) = row.get(1) {
+            column2.push(value);
+        }
+    }
+
+    // Sort both columns
+    column1.sort();
+    column2.sort();
+    
+    let mut sum = 0;
+
+    for (val1, val2) in column1.iter().zip(column2.iter()) {
+        sum += (*val1 - *val2).abs();
+    }
+    
+    println!("Total sum of absolute differences: {}", sum);   
+}
+
 fn main() {
     let matches = Command::new("1_rust")
         .version("1.0")
@@ -26,8 +60,14 @@ fn main() {
             // Try to read and print the file contents
             match fs::read_to_string(&file_path) {
                 Ok(contents) => {
-                    println!("File contents:");
-                    println!("{}", contents);
+                    let table: Table<i32> = from_string_with(&contents, |s| {
+                        s.parse().unwrap_or_else(|_| {
+                            eprintln!("Warning: Failed to parse '{}' as integer, using 0", s);
+                            0
+                        })
+                    });
+
+                    process(&table);
                 }
                 Err(err) => {
                     eprintln!("Error reading file '{}': {}", file_path.display(), err);
@@ -38,12 +78,5 @@ fn main() {
         }
     } else {
         println!("No filename provided. Use --filename or -f to specify a file.");
-    }
-
-    // Print the current working directory
-    if let Ok(current_dir) = std::env::current_dir() {
-        println!("Current working directory: {}", current_dir.display());
-    } else {
-        eprintln!("Failed to get the current working directory.");
     }
 }
