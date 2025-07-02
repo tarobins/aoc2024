@@ -40,7 +40,7 @@ fn main() {
     println!("Tuples: {:?}", tuples);
     println!("Vectors: {:?}", vectors);
 
-    let mut valid_vectors: Vec<Vec<i32>> = Vec::new();
+    let mut invalid_vectors: Vec<Vec<i32>> = Vec::new();
     for vector in &vectors {
         let mut is_vector_valid = true;
         if vector.len() < 2 {
@@ -63,20 +63,29 @@ fn main() {
             }
         }
 
-        if is_vector_valid {
-            valid_vectors.push(vector.clone());
+        if !is_vector_valid {
+            invalid_vectors.push(vector.clone());
         }
     }
 
-    println!("Valid Vectors: {:?}", valid_vectors);
+    println!("Tuples: {:?}", tuples);
+    println!("Vectors: {:?}", vectors);
+
+    println!("Invalid Vectors: {:?}", invalid_vectors);
 
     let mut total_sum = 0;
-    println!("\nCalculating sum of center elements:");
-    for vector in &valid_vectors {
+    println!(
+        "
+Calculating sum of center elements:"
+    );
+    for vector in &invalid_vectors {
         if !vector.is_empty() {
             let center_index = vector.len() / 2;
             let center_element = vector[center_index];
-            println!("  - For vector {:?}, center element is {}, adding to sum.", vector, center_element);
+            println!(
+                "  - For vector {:?}, center element is {}, adding to sum.",
+                vector, center_element
+            );
             total_sum += center_element;
         }
     }
